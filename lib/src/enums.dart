@@ -1,6 +1,5 @@
 import 'package:camera/camera.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter/widgets.dart';
 
 enum ImageResolution {
   /// 352x288 on iOS, 240p (320x240) on Android and Web

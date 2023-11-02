@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 import 'selfie_camera.dart';
@@ -33,7 +31,7 @@ class SelfieCamera {
     return _isLog;
   }
 
-  static Future<File?> selfieCameraFile(
+  static Future<XFile?> selfieCameraFile(
     BuildContext context, {
     ImageResolution imageResolution = ImageResolution.medium,
     CameraType defaultCameraType = CameraType.front,
@@ -49,7 +47,7 @@ class SelfieCamera {
     FlashControlBuilder? flashControlBuilder,
     Widget? closeControlIcon,
   }) async {
-    File? cameraFile;
+    XFile? cameraFile;
     await showDialog(
       context: context,
       builder: (context) {

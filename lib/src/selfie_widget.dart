@@ -22,7 +22,7 @@ class SelfieWidget extends StatefulWidget {
   final bool showFlashControl;
   final bool showCameraTypeControl;
   final bool showCloseControl;
-  final void Function(File? image)? onCapture;
+  final void Function(XFile? image)? onCapture;
   final Widget? captureControlIcon;
   final Widget? typeControlIcon;
   final FlashControlBuilder? flashControlBuilder;
@@ -96,9 +96,6 @@ class _SelfieWidgetState extends State<SelfieWidget>
         widget.imageResolution.resolutionPreset,
         enableAudio: false,
         imageFormatGroup: ImageFormatGroup.jpeg,
-        // imageFormatGroup: Platform.isAndroid
-        //     ? ImageFormatGroup.nv21
-        //     : ImageFormatGroup.bgra8888,
       );
 
       await _controller!.initialize().then((_) {
@@ -384,7 +381,7 @@ class _SelfieWidgetState extends State<SelfieWidget>
                   builder: (BuildContext context) =>
                       ResultWidget(file: File(file.path))));
           if (result != null && widget.onCapture != null) {
-            widget.onCapture!(File(file.path));
+            widget.onCapture!(file);
           }
         }
       });
