@@ -8,4 +8,8 @@
 
 ## 0.0.3
 
-* Start taking selfies.
+* Modify return value.
+
+## 0.0.4
+
+* Optimized interface.

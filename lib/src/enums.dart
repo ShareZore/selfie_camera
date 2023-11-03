@@ -142,4 +142,3 @@ extension CameraOrientationExtension on CameraOrientation {
     }
   }
 }
-

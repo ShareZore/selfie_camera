@@ -1,6 +1,6 @@
 name: selfie_camera
-description: selfie
-version: 0.0.3
+description: A simple camera plug-in, mainly suitable for selfie scenes, the current function is relatively single
+version: 0.0.4
 repository: https://github.com/ShareZore/selfie_camera.git
 homepage: https://flutter.cn
 

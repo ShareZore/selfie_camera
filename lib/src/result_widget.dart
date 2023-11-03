@@ -38,43 +38,41 @@ class ResultWidget extends StatelessWidget {
           ),
           SafeArea(
             child: Container(
-              margin: const EdgeInsets.only(bottom: 100),
+              padding: const EdgeInsets.only(bottom: 80, top: 20),
               width: double.infinity,
-              height: 50,
               color: Colors.black12,
-              child: Center(
-                child: Row(
-                  mainAxisSize: MainAxisSize.min,
-                  children: [
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
-                      child: const Text(
-                        "Retry",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
+              child: Row(
+                mainAxisSize: MainAxisSize.min,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text(
+                      "Retry",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
                       ),
                     ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width / 2,
-                    ),
-                    InkWell(
-                      onTap: () {
-                        Navigator.pop(context, true);
-                      },
-                      child: const Text(
-                        "Confirm",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                        ),
+                  ),
+                  SizedBox(
+                    width: MediaQuery.of(context).size.width / 3,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Navigator.pop(context, true);
+                    },
+                    child: const Text(
+                      "Confirm",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
                       ),
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
           ),
