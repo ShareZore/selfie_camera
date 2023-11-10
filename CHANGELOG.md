@@ -13,3 +13,7 @@
 ## 0.0.4
 
 * Optimized interface.
+
+## 0.0.5
+
+* Optimized interface.

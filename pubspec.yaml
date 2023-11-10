@@ -1,6 +1,6 @@
 name: selfie_camera
 description: A simple camera plug-in, mainly suitable for selfie scenes, the current function is relatively single
-version: 0.0.4
+version: 0.0.5
 repository: https://github.com/ShareZore/selfie_camera.git
 homepage: https://flutter.cn
 
@@ -18,7 +18,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^3.0.0
+  flutter_lints: ^3.0.1
 
 flutter:
 

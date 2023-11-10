@@ -173,6 +173,7 @@ class _SelfieWidgetState extends State<SelfieWidget>
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
+      backgroundColor: Colors.black,
       body: isAppInBackground
           ? Container(
               color: Colors.black,
@@ -258,7 +259,7 @@ class _SelfieWidgetState extends State<SelfieWidget>
   Widget _captureControlWidget() {
     final CameraController? cameraController = _controller;
 
-    return InkWell(
+    return GestureDetector(
       onTap: cameraController != null && cameraController.value.isInitialized
           ? _onTakePictureButtonPressed
           : null,
@@ -289,7 +290,7 @@ class _SelfieWidgetState extends State<SelfieWidget>
                 ? Icons.flash_off
                 : Icons.flash_auto;
 
-    return InkWell(
+    return GestureDetector(
       onTap: cameraController != null && cameraController.value.isInitialized
           ? () => _changeFlashMode(
               (_currentFlashMode + 1) % _availableFlashMode.length)
@@ -316,7 +317,7 @@ class _SelfieWidgetState extends State<SelfieWidget>
 
   Widget _typeControlWidget() {
     final CameraController? cameraController = _controller;
-    return InkWell(
+    return GestureDetector(
       onTap: cameraController != null && cameraController.value.isInitialized
           ? () {
               _currentCameraType =

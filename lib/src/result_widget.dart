@@ -49,11 +49,16 @@ class ResultWidget extends StatelessWidget {
                     onTap: () {
                       Navigator.pop(context);
                     },
-                    child: const Text(
-                      "Retry",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
+                    child: Container(
+                      color: Colors.transparent,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      child: const Text(
+                        "Retry",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                   ),
@@ -64,11 +69,16 @@ class ResultWidget extends StatelessWidget {
                     onTap: () {
                       Navigator.pop(context, true);
                     },
-                    child: const Text(
-                      "Confirm",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 20,
+                    child: Container(
+                      color: Colors.transparent,
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 8, vertical: 4),
+                      child: const Text(
+                        "Confirm",
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 20,
+                        ),
                       ),
                     ),
                   ),
