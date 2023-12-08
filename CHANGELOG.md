@@ -17,3 +17,7 @@
 ## 0.0.5
 
 * Optimized interface.
+
+## 0.0.6
+
+* Prevent repeated clicks to take photos.

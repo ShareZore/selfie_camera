@@ -126,6 +126,34 @@ enum CameraOrientation {
   landscapeRight,
 }
 
+enum ImageScale {
+  none,
+
+  /// 4:3
+  small,
+
+  /// 1:1
+  middle,
+
+  /// 16:9
+  big,
+}
+
+extension ImageScaleExtension on ImageScale {
+  double get scale {
+    switch (this) {
+      case ImageScale.small:
+        return 3 / 4;
+      case ImageScale.middle:
+        return 1 / 1;
+      case ImageScale.big:
+        return 9 / 16;
+      case ImageScale.none:
+        return 0;
+    }
+  }
+}
+
 extension CameraOrientationExtension on CameraOrientation {
   DeviceOrientation? get deviceOrientation {
     switch (this) {
