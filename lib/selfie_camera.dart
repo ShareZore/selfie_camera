@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'selfie_camera.dart';
 import 'src/logger.dart';
 import 'src/selfie_widget.dart';
-
 export 'src/enums.dart';
 
 class SelfieCamera {
@@ -11,9 +10,7 @@ class SelfieCamera {
 
   static bool _isLog = false;
 
-  /// Initialize device cameras
   static Future<void> initialize({bool isLog = false}) async {
-    /// Fetch the available cameras before initializing the app.
     try {
       _cameras = await availableCameras();
       _isLog = isLog;
@@ -21,8 +18,7 @@ class SelfieCamera {
       logError(e.code, e.description);
     }
   }
-
-  /// Returns available cameras
+  
   static List<CameraDescription> get cameras {
     return _cameras;
   }
@@ -46,9 +42,11 @@ class SelfieCamera {
     Widget? typeControlIcon,
     FlashControlBuilder? flashControlBuilder,
     Widget? closeControlIcon,
+    ImageScale imageScale = ImageScale.none,
   }) async {
     XFile? cameraFile;
     await showDialog(
+      barrierColor: Colors.black,
       context: context,
       builder: (context) {
         return SelfieWidget(
@@ -69,6 +67,7 @@ class SelfieCamera {
           typeControlIcon: typeControlIcon,
           flashControlBuilder: flashControlBuilder,
           closeControlIcon: closeControlIcon,
+          imageScale: imageScale,
         );
       },
     );

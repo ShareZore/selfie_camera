@@ -5,7 +5,7 @@ import 'dart:ui' as ui;
 
 import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
+import 'package:flutter/services.dart';
 import 'package:image_editor/image_editor.dart';
 import 'package:selfie_camera/selfie_camera.dart';
 import 'logger.dart';
@@ -56,10 +56,8 @@ class SelfieWidget extends StatefulWidget {
 
 class _SelfieWidgetState extends State<SelfieWidget>
     with WidgetsBindingObserver, TickerProviderStateMixin {
-  /// 全局key
   final GlobalKey _cameraWidgetKey = GlobalKey();
 
-  ///是否能点击拍照
   bool _isClick = false;
 
   bool _isAppInBackground = false;
@@ -114,6 +112,8 @@ class _SelfieWidgetState extends State<SelfieWidget>
         }
         setState(() {});
       });
+
+      await _controller!.setFocusMode(FocusMode.auto);
 
       await _changeFlashMode(
           _availableFlashMode.indexOf(widget.defaultFlashType));
@@ -179,7 +179,6 @@ class _SelfieWidgetState extends State<SelfieWidget>
   Widget build(BuildContext context) {
     final CameraController? cameraController = _controller;
 
-    // 设备尺寸
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -260,11 +259,8 @@ class _SelfieWidgetState extends State<SelfieWidget>
     );
   }
 
-  ///预览
   Widget _cameraDisplayWidget(CameraController cameraController) {
-    // 相机预览
     final size = MediaQuery.of(context).size;
-    // 超出部分裁剪
     Widget area = ClipRect(
       child: OverflowBox(
         alignment: Alignment.center,
@@ -283,7 +279,6 @@ class _SelfieWidgetState extends State<SelfieWidget>
       ),
     );
     return Center(
-      // 指定需要截图的区域
       child: Stack(
         children: [
           AspectRatio(
@@ -419,7 +414,7 @@ class _SelfieWidgetState extends State<SelfieWidget>
         await cameraController.stopImageStream();
       }
       await Future.delayed(const Duration(milliseconds: 100));
-      takePicture().then((XFile? file) async {
+      _takePicture().then((XFile? file) async {
         if (file != null) {
           _isClick = false;
           var result = await Navigator.push(
@@ -440,7 +435,7 @@ class _SelfieWidgetState extends State<SelfieWidget>
     }
   }
 
-  Future<XFile?> takePicture() async {
+  Future<XFile?> _takePicture() async {
     final CameraController? cameraController = _controller;
     if (cameraController == null || !cameraController.value.isInitialized) {
       logError('Error: select a camera first.');
@@ -466,22 +461,23 @@ class _SelfieWidgetState extends State<SelfieWidget>
           File(path).writeAsBytesSync(bytes!);
         }
       } else {
-        ///截屏
-        Uint8List? jpBytes = await _capturePng(_cameraWidgetKey);
+        Uint8List? corpBytes = bytes;
+        ImageEditorOption option = ImageEditorOption();
+        ui.Image image = await _uint8ListChangeImage(bytes);
+        double width = image.width.toDouble();
+        double height = image.height.toDouble();
+        double realHeight = width / widget.imageScale.scale;
+        double topY = (height - realHeight) / 2;
+        option.addOption(
+            ClipOption(x: 0, y: topY, width: width, height: realHeight));
+        if (cameraController.description.lensDirection ==
+            CameraLensDirection.front) {
+          option.addOption(const FlipOption(horizontal: true));
+        }
+        corpBytes = await ImageEditor.editImage(
+            image: corpBytes, imageEditorOption: option);
         await File(path).delete();
-        File(path).writeAsBytesSync(jpBytes!);
-
-        ///裁剪
-        // Uint8List? corpBytes = await corpImage(bytes);
-        // if (cameraController.description.lensDirection ==
-        //     CameraLensDirection.front) {
-        //   ImageEditorOption option = ImageEditorOption();
-        //   option.addOption(const FlipOption(horizontal: true));
-        //   corpBytes = await ImageEditor.editImage(
-        //       image: corpBytes, imageEditorOption: option);
-        // }
-        // await File(path).delete();
-        // File(path).writeAsBytesSync(corpBytes!);
+        File(path).writeAsBytesSync(corpBytes!);
       }
       return file;
     } on CameraException catch (e) {
@@ -490,51 +486,9 @@ class _SelfieWidgetState extends State<SelfieWidget>
     }
   }
 
-  ///裁剪照片
-  Future<Uint8List> corpImage(Uint8List bytes) async {
-    ui.Image image = await uint8ListChangeImage(bytes);
-    double width = image.width.toDouble();
-    double height = image.height.toDouble();
-    Paint paint = Paint();
-    ui.PictureRecorder recorder = ui.PictureRecorder();
-    Canvas canvas2 = Canvas(recorder);
-    double realHeight = width / widget.imageScale.scale;
-    double topY = (height - realHeight) / 2;
-    Rect source = Rect.fromLTWH(0, topY, width, realHeight);
-    Rect dest = Rect.fromLTWH(0, 0, width, realHeight);
-    canvas2.drawImageRect(image, source, dest, paint);
-    var image2 = await recorder
-        .endRecording()
-        .toImage(dest.width.toInt(), dest.height.toInt());
-    ByteData? byteData =
-        await image2.toByteData(format: ui.ImageByteFormat.png);
-    Uint8List pngBytes = byteData!.buffer.asUint8List();
-    return pngBytes;
-  }
-
-  /// Uint8List 转 Image
-  Future<ui.Image> uint8ListChangeImage(Uint8List list) async {
+  Future<ui.Image> _uint8ListChangeImage(Uint8List list) async {
     ui.Codec codec = await ui.instantiateImageCodec(list);
     ui.FrameInfo frame = await codec.getNextFrame();
     return frame.image;
-  }
-
-  /// 截图
-  Future<Uint8List?> _capturePng(
-    GlobalKey globalKey, {
-    double pixelRatio = 1.0, //截屏的图片与原图的比例，越大越清晰
-  }) async {
-    try {
-      RenderRepaintBoundary boundary =
-          globalKey.currentContext?.findRenderObject() as RenderRepaintBoundary;
-      var image = await boundary.toImage(pixelRatio: pixelRatio);
-      ByteData? byteData =
-          await image.toByteData(format: ui.ImageByteFormat.png);
-      Uint8List? pngBytes = byteData?.buffer.asUint8List();
-      return pngBytes;
-    } catch (e) {
-      logError(e.toString());
-    }
-    return null;
   }
 }

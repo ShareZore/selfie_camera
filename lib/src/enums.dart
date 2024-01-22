@@ -129,13 +129,13 @@ enum CameraOrientation {
 enum ImageScale {
   none,
 
-  /// 4:3
+  /// 16:9
   small,
 
   /// 1:1
   middle,
 
-  /// 16:9
+  /// 3:4
   big,
 }
 
@@ -143,11 +143,11 @@ extension ImageScaleExtension on ImageScale {
   double get scale {
     switch (this) {
       case ImageScale.small:
-        return 3 / 4;
+        return 16 / 9;
       case ImageScale.middle:
         return 1 / 1;
       case ImageScale.big:
-        return 9 / 16;
+        return 3 / 4;
       case ImageScale.none:
         return 0;
     }

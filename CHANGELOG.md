@@ -21,3 +21,7 @@
 ## 0.0.6
 
 * Prevent repeated clicks to take photos.
+
+## 0.0.7
+
+* Added setting photo size.

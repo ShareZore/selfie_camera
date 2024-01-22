@@ -21,10 +21,10 @@ packages:
     dependency: transitive
     description:
       name: camera
-      sha256: "1f9010f0689774380fbcd7d6b7820a5157e8e97685fa66d619e1d1f58b3fdf93"
+      sha256: "9499cbc2e51d8eb0beadc158b288380037618ce4e30c9acbc4fae1ac3ecb5797"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "0.10.5+5"
+    version: "0.10.5+9"
   camera_android:
     dependency: transitive
     description:
@@ -243,10 +243,10 @@ packages:
     dependency: transitive
     description:
       name: plugin_platform_interface
-      sha256: da3fdfeccc4d4ff2da8f8c556704c08f912542c5fb3cf2233ed75372384a034d
+      sha256: "4820fbfdb9478b1ebae27888254d445073732dae3d6ea81f0b7e06d5dedc3f02"
       url: "https://pub.flutter-io.cn"
     source: hosted
-    version: "2.1.6"
+    version: "2.1.8"
   process:
     dependency: transitive
     description:
@@ -255,21 +255,13 @@ packages:
       url: "https://pub.flutter-io.cn"
     source: hosted
     version: "4.2.4"
-  quiver:
-    dependency: transitive
-    description:
-      name: quiver
-      sha256: b1c1ac5ce6688d77f65f3375a9abb9319b3cb32486bdc7a1e0fdf004d7ba4e47
-      url: "https://pub.flutter-io.cn"
-    source: hosted
-    version: "3.2.1"
   selfie_camera:
     dependency: "direct main"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.0.5"
+    version: "0.0.6"
   sky_engine:
     dependency: transitive
     description: flutter

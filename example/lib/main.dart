@@ -38,9 +38,12 @@ class _MyHomePageState extends State<MyHomePage> {
   void _incrementCounter() async {
     var file = await SelfieCamera.selfieCameraFile(
       context,
-      imageResolution: ImageResolution.max,
+      imageResolution: ImageResolution.high,
       defaultCameraType: CameraType.front,
       defaultFlashType: CameraFlashType.off,
+      imageScale: ImageScale.big,
+      showCameraTypeControl: false,
+      showFlashControl: false,
     );
     if (file != null) {
       setState(() {

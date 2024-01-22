@@ -1,4 +1,5 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class ResultWidget extends StatelessWidget {
@@ -57,7 +58,8 @@ class ResultWidget extends StatelessWidget {
                         "Retry",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
@@ -77,7 +79,8 @@ class ResultWidget extends StatelessWidget {
                         "Confirm",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 20,
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ),
